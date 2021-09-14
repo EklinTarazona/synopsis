@@ -1,5 +1,6 @@
 package ws.synopsis.trainingdos.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
