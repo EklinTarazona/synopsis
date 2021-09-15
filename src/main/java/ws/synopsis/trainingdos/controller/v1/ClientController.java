@@ -2,16 +2,13 @@ package ws.synopsis.trainingdos.controller.v1;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ws.synopsis.trainingdos.exception.ClientExistException;
-import ws.synopsis.trainingdos.exception.ClientNotExistException;
+import ws.synopsis.trainingdos.enumeration.TrainingStatusEnum;
+import ws.synopsis.trainingdos.exception.TrainingException;
 import ws.synopsis.trainingdos.model.Client;
 import ws.synopsis.trainingdos.request.ClientDelRequest;
 import ws.synopsis.trainingdos.request.ClientRequest;
-import ws.synopsis.trainingdos.response.IndexResponse;
 import ws.synopsis.trainingdos.response.TrainingResponse;
-import ws.synopsis.trainingdos.response.TrainingStatus;
 import ws.synopsis.trainingdos.service.ClientService;
-import ws.synopsis.trainingdos.service.TrainingService;
 
 import java.util.List;
 
@@ -23,34 +20,31 @@ public class ClientController {
     private ClientService service;
 
     @PostMapping
-    public TrainingResponse<?> add(@RequestBody ClientRequest beanReq) throws ClientExistException {
+    public TrainingResponse<?> add(@RequestBody ClientRequest beanReq) throws TrainingException {
         service.add(beanReq);
-        TrainingResponse<?> response = new TrainingResponse<>();
-        response.setStatus(new TrainingStatus("0000", "Ejecutado de manera exitosa."));
+        TrainingResponse<?> response = TrainingStatusEnum.OK.createResponse(Object.class);
         return response;
     }
 
     @PutMapping
-    public TrainingResponse<?> edit(@RequestBody ClientRequest beanReq) throws ClientNotExistException {
+    public TrainingResponse<?> edit(@RequestBody ClientRequest beanReq) throws TrainingException {
         service.edit(beanReq);
-        TrainingResponse<?> response = new TrainingResponse<>();
-        response.setStatus(new TrainingStatus("0000", "Ejecutado de manera exitosa."));
+        TrainingResponse<?> response = TrainingStatusEnum.OK.createResponse(Object.class);
         return response;
     }
 
     @DeleteMapping
     public TrainingResponse<?> remove(@RequestBody ClientDelRequest beanReq) {
         service.remove(beanReq);
-        TrainingResponse<?> response = new TrainingResponse<>();
-        response.setStatus(new TrainingStatus("0000", "Ejecutado de manera exitosa."));
+        TrainingResponse<?> response = TrainingStatusEnum.OK.createResponse(Object.class);
         return response;
     }
 
     @GetMapping
     public TrainingResponse<List<Client>> list(){
         TrainingResponse<List<Client>> response = new TrainingResponse<>();
+        response.setStatus(TrainingStatusEnum.OK.getStatus());
         response.setData(service.list());
-        response.setStatus(new TrainingStatus("0000", "Ejecutado de manera exitosa."));
         return response;
     }
 

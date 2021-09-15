@@ -1,8 +1,8 @@
 package ws.synopsis.trainingdos.repository.impl;
 
 import org.springframework.stereotype.Component;
-import ws.synopsis.trainingdos.exception.ClientExistException;
-import ws.synopsis.trainingdos.exception.ClientNotExistException;
+import ws.synopsis.trainingdos.enumeration.TrainingStatusEnum;
+import ws.synopsis.trainingdos.exception.TrainingException;
 import ws.synopsis.trainingdos.model.Client;
 import ws.synopsis.trainingdos.repository.ClientRespository;
 
@@ -21,19 +21,19 @@ public class ClientRepositoryImpl implements ClientRespository {
     }
 
     @Override
-    public void add(Client client) throws ClientExistException {
+    public void add(Client client) throws TrainingException {
         if(this.data.containsKey(client.getClientId()))
         {
-            throw new ClientExistException("El cliente ya existe");
+            throw new TrainingException(TrainingStatusEnum.ERROR_CLIENT_EXIST);
         }
         this.data.put(client.getClientId(), client);
     }
 
     @Override
-    public void edit(Client client) throws ClientNotExistException {
+    public void edit(Client client) throws TrainingException {
         if(!this.data.containsKey(client.getClientId()))
         {
-            throw new ClientNotExistException("El cliente no existe");
+            throw new TrainingException(TrainingStatusEnum.ERROR_CLIENT_NOT_EXIST);
         }
         this.data.put(client.getClientId(), client);
     }

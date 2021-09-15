@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ws.synopsis.trainingdos.enumeration.TrainingStatusEnum;
 import ws.synopsis.trainingdos.response.IndexResponse;
 import ws.synopsis.trainingdos.response.TrainingResponse;
 import ws.synopsis.trainingdos.response.TrainingStatus;
@@ -18,9 +19,8 @@ public class TrainingController {
 
     @GetMapping({"/", ""})
     public TrainingResponse<IndexResponse> index(){
-        TrainingResponse<IndexResponse> response = new TrainingResponse<>();
+        TrainingResponse<IndexResponse> response = TrainingStatusEnum.OK.createResponse(IndexResponse.class);
         response.setData(service.index());
-        response.setStatus(TrainingStatus.builder().code("0000").message("Ejecutado de manera exitosa.").build());
         return response;
     }
 

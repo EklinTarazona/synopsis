@@ -3,8 +3,7 @@ package ws.synopsis.trainingdos.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ws.synopsis.trainingdos.converter.ClientRequestToModel;
-import ws.synopsis.trainingdos.exception.ClientExistException;
-import ws.synopsis.trainingdos.exception.ClientNotExistException;
+import ws.synopsis.trainingdos.exception.TrainingException;
 import ws.synopsis.trainingdos.model.Client;
 import ws.synopsis.trainingdos.repository.ClientRespository;
 import ws.synopsis.trainingdos.request.ClientDelRequest;
@@ -23,13 +22,13 @@ public class ClientServiceImpl implements ClientService {
     private ClientRequestToModel clientRequestConverter;
 
     @Override
-    public void add(ClientRequest client) throws ClientExistException {
+    public void add(ClientRequest client) throws TrainingException {
         Client clientModel = clientRequestConverter.convert(client);
         repository.add(clientModel);
     }
 
     @Override
-    public void edit(ClientRequest client) throws ClientNotExistException {
+    public void edit(ClientRequest client) throws TrainingException {
         Client clientModel = clientRequestConverter.convert(client);
         repository.edit(clientModel);
     }
